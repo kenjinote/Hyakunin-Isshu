@@ -1,11 +1,10 @@
 #pragma comment(lib,"imm32")
 #pragma comment(lib,"comctl32")
 
-#pragma comment(linker,"/opt:nowin98")
-#include<windows.h>
-#include<commctrl.h>
-#include<imm.h>
-#include"resource.h"
+#include <windows.h>
+#include <commctrl.h>
+#include <imm.h>
+#include "resource.h"
 
 CHAR szClassName[]="window";
 
@@ -23,8 +22,7 @@ LRESULT CALLBACK WndProc(HWND hWnd,UINT msg,WPARAM wParam,LPARAM lParam)
 			ListView_DeleteAllItems(hList);
 			if(GetWindowTextLength(hEdit)==0)break;
 			GetWindowText(hEdit,szEdit,256);
-			int i;
-			for(i=1;i<=100;i++)
+			for (int i = 1; i <= 100; ++i)
 			{
 				CHAR szText[1024];
 				LoadString(
@@ -49,21 +47,22 @@ LRESULT CALLBACK WndProc(HWND hWnd,UINT msg,WPARAM wParam,LPARAM lParam)
 					strlen(szEdit))
 					))
 				{
-					char *token; 
-					token = strtok(szText, "\n"); 
-					token = strtok(NULL, "\n"); 
+					char* pszTemp = NULL;
+					char *token;
+					token = strtok_s(szText, "\n", &pszTemp);
+					token = strtok_s(NULL, "\n", &pszTemp);
 					LV_ITEM		item;
 					item.mask = LVIF_TEXT;
 					item.pszText=token;
 					item.iItem = 0;
 					item.iSubItem = 0;
 					ListView_InsertItem(hList, &item);
-					token = strtok(NULL, "\n");
+					token = strtok_s(NULL, "\n", &pszTemp);
 					item.pszText=token;
 					item.iItem = 0;
 					item.iSubItem = 1;
 					ListView_SetItem(hList, &item);
-					token = strtok(NULL, "\n"); 
+					token = strtok_s(NULL, "\n", &pszTemp);
 					item.pszText=token;
 					item.iItem = 0;
 					item.iSubItem = 2;
